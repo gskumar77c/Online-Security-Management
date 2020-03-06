@@ -29,6 +29,12 @@ ALLOWED_HOSTS = []
 
 AUTH_USER_MODEL = 'security.User'
 
+
+LOGIN_REDIRECT_URL = 'home'
+
+LOGIN_URL = 'login'
+
+
 # Application definition
 
 INSTALLED_APPS = [
