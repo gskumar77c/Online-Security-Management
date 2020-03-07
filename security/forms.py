@@ -1,4 +1,4 @@
-from .models import User
+from .models import User,Profile
 from django import forms
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
@@ -7,7 +7,7 @@ from django.contrib.auth.forms import ReadOnlyPasswordHashField
 class UserCreationForm(forms.ModelForm):
 
 	password1 = forms.CharField(label='password',widget=forms.PasswordInput(attrs={"class":"form-control","placeholder":"Password *"}))
-	password2 = forms.CharField(label='confirm password',widget=forms.PasswordInput(attrs={"class":"form-control","placeholder":"Password *"}))
+	password2 = forms.CharField(label='confirm password',widget=forms.PasswordInput(attrs={"class":"form-control","placeholder":"Confirm Password *"}))
 	email  = forms.CharField(max_length=255,widget = forms.EmailInput(attrs={"class":"form-control","placeholder":"Email *"}))
 	fullname = forms.CharField(max_length=200,widget=forms.TextInput(attrs={"class":"form-control","placeholder":"Full Name *"}))
 
@@ -40,3 +40,18 @@ class UserChangeForm(forms.ModelForm):
 
 	def clean_password(self):
 		return self.initial['password']
+
+
+
+
+class UserUpdateForm(forms.ModelForm):
+	fullname = forms.CharField()
+
+	class Meta:
+		model = User
+		fields = ['fullname']
+
+class ProfileUpdateForm(forms.ModelForm):
+	class Meta:
+		model = Profile
+		fields = ['dob','address','image']
