@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser,AbstractBaseUser,BaseUserManager
 from django.conf import settings
 from PIL import Image
+from .import worker
 
 
 class UserManager(BaseUserManager):
@@ -73,3 +74,42 @@ class Profile(models.Model):
 			print(self.image.path)
 			img.thumbnail(output_size)
 			img.save(self.image.path)
+
+
+
+class MonthlyInformation(models.Model):
+	user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
+	duties = models.IntegerField(default=0)
+	fine  = models.IntegerField(default=0)
+	availabel_leaves = models.IntegerField(default=worker.MAX_LEAVES)
+	month = models.DateField(blank=True,null=True)
+
+	def __str__(self):
+		mn = str(self.month)
+		return self.user.email + " | " + mn + " | duties: " + str(self.duties)
+
+
+
+class Duties(models.Model):
+	user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
+	date =models.DateField(blank=True,null=True)
+	placeno = models.IntegerField(default=-7)
+
+
+	def __str__(self):
+		return self.user.email + " | " + str(self.date) + " | " + str(self.placeno)
+
+
+
+class Leaves(models.Model):
+	user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
+	status = models.CharField(max_length = 9,default='REQUESTED')
+	comment = models.TextField(blank=True,null=True)
+	startdate = models.DateField(blank=True,null=True)
+	days = models.IntegerField(default=0)
+
+	def __str__(self):
+		return self.user.email + " | " + str(self.status) + " | " + str(self.startdate) + " | " + str(self.days)
+
+
+

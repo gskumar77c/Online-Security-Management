@@ -8,7 +8,10 @@ from .models import Profile,User
 
 @login_required
 def home(request):
-	return render(request,'security/home.html')
+	if request.user.is_admin:
+		return render(request,'security/adminhome.html')
+	else:
+		return render(request,'security/home.html')
 
 
 def register(request):
@@ -58,3 +61,13 @@ def profile(request):
 				'p_form' : p_form
 				}
 	return render(request,'security/profile.html',context)
+
+
+
+@login_required
+def schedule(request):
+	if not request.user.is_admin:
+		return redirect('home')
+
+	users = User.objects.filter(is_admin=False,is_active=True)
+	useravailability = {}
