@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User,Profile,MonthlyInformation,Duties,Leaves
+from .models import User,Profile
 from django import forms
 from django.contrib.auth.models import Group
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
@@ -33,7 +33,4 @@ class UserAdmin(BaseUserAdmin):
 
 admin.site.register(User,UserAdmin)
 admin.site.unregister(Group)
-admin.site.register(MonthlyInformation)
-admin.site.register(Duties)
-admin.site.register(Leaves)
 admin.site.register(Profile)

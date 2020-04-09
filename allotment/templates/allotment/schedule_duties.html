@@ -1,0 +1,23 @@
+{% extends "security/base2.html" %}
+{% block content %}
+	<div class="container">
+		<table class="table table-hover">
+			<tr>
+				<th>user id</th>
+				<th>job place</th>
+				<th>job name</th>
+				<th>date</th>
+			</tr>
+			{% for ele in data %}
+			<tr>
+				<td>{{ele.user.email}}</td>
+				<td>{{ele.job.name}}</td>
+				<td>{{ele.job.job}}</td>
+				<td>{{ele.date}}</td>
+			</tr>
+			{% endfor %}
+		</table>
+	</div>
+
+
+{% endblock content %}
